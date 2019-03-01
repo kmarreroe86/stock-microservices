@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: eureka-service
+    
+server:
+  port: 8303
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+    #server:
+    #  waitTimeInMsWhenSyncEmpty: 0
+    
+zuul:
+  #Service will be mapped under the /api URI
+  prefix: /api
+  routes:
+    db-service:
+      path: /db-service/**
+      url: http://localhost:8300
+    stock-service:
+      path: /stock-service/**
+      url: http://localhost:8301
